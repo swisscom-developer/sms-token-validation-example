@@ -24,3 +24,7 @@ https://developer.swisscom.ch
 
 See the getting started section for more information on how to get an
 API key.
+
+Once you have your API Key, add the key to the settings.ini file.
+
+__Note:__ For SMS Token Validation API, the API secret is not used, only the key.
