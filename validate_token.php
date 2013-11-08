@@ -33,9 +33,6 @@ $curl_post_data = array(
 // Encode the post data in JSON
 $json_post_data = json_encode($curl_post_data);
 
-// Encode the post data in JSON.
-$json_post_data = json_encode($curl_post_data);
-
 // Add the encoded data to the curl request.
 curl_setopt($curl, CURLOPT_POSTFIELDS, $json_post_data);
 
