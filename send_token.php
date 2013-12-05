@@ -17,7 +17,7 @@ $mobile_number = $_POST['mobile_number'];
 $settings = parse_ini_file("settings.ini", TRUE);
 
 // The URL to send the request to.
-$service_url = $settings['swisscom_general']['swisscom_api_base_url'] . '/' . $settings['sms_token_validation']['sms_token_send_url'] . '/%2B' . $mobile_number;
+$service_url = $settings['swisscom_general']['swisscom_api_base_url'] . '/' . $settings['sms_token_validation']['sms_token_send_url'];
 $curl = curl_init($service_url);
 
 // Set the default headers and the all important API key from the settings file.
@@ -32,6 +32,7 @@ curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
 // Data to send in the post request instead of form parameters.  See Swisscom's
 // SMS Token validation documentation for details.
 $curl_post_data = array(
+  "to" => $mobile_number
   "text" => $settings['sms_token_validation']['sms_token_text'],
   "tokenType" =>  $settings['sms_token_validation']['sms_token_type'],
   "expireTime" => $settings['sms_token_validation']['sms_token_expire_time'],
