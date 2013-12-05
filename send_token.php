@@ -31,8 +31,9 @@ curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
 
 // Data to send in the post request instead of form parameters.  See Swisscom's
 // SMS Token validation documentation for details.
+// Some strange comment ....
 $curl_post_data = array(
-  "to" => $mobile_number
+  "to" => $mobile_number,
   "text" => $settings['sms_token_validation']['sms_token_text'],
   "tokenType" =>  $settings['sms_token_validation']['sms_token_type'],
   "expireTime" => $settings['sms_token_validation']['sms_token_expire_time'],
