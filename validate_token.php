@@ -1,5 +1,5 @@
 <?php
-
+// 04/25/14
 // Get the mobile number from hidden form field.
 $mobile_number = $_POST['mobile_number'];
 
@@ -13,8 +13,7 @@ $validate_token = $_POST['validate_token'];
 $settings = parse_ini_file("settings.ini", TRUE);
 
 // The URL to send the request to.
-$service_url = $settings['swisscom_general']['swisscom_api_base_url'] . '/' . $settings['sms_token_validation']['sms_token_validate_url'] . '/%2B' . $mobile_number;
-
+$service_url = $settings['swisscom_general']['swisscom_api_base_url'] . '/' . $settings['sms_token_validation']['sms_token_validate_url'] . '/%2B' . $mobile_number . '/' . $validate_token;
 $curl = curl_init($service_url);
 
 // Set the default headers and the all important API key
@@ -25,22 +24,11 @@ $header = array(
 );
 curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
 
-// The token you are validating is sent in the body of the request.
-$curl_post_data = array(
-  "token" => $validate_token
-);
-
-// Encode the post data in JSON
-$json_post_data = json_encode($curl_post_data);
-
-// Add the encoded data to the curl request.
-curl_setopt($curl, CURLOPT_POSTFIELDS, $json_post_data);
-
 // Makes curl_exec() return a string.
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-// We are sending a POST request.
-curl_setopt($curl, CURLOPT_POST, true);
+// We are sending a GET request.
+curl_setopt($curl, CURLOPT_HTTPGET, TRUE);
 
 // Similar to cmd-line curl's -k option during development
 curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
@@ -65,11 +53,8 @@ if(curl_error($curl) || $http_response_code != 200) {
 }
 curl_close($curl);
 
-// Decode the response from JSON into an array.
-$curl_response = @json_decode($curl_response_json, TRUE);
 
-// Is the token valid?
-if($curl_response['validateSmsTokenResponse']['state'] == 'OK') {
+if($http_response_code == 200) {
   // The token was valid.
   $reservation_confirmed = TRUE;
   $alert_success = 'Great success! Your reservation has been confirmed. Make sure to ask your sever about our daily specials.';
