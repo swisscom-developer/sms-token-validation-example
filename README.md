@@ -7,7 +7,7 @@ fictional restaurant.
 
 For more information on how to use this example, go to:
 
-https://developer.swisscom.ch
+https://developer.swisscom.com
 
 Getting Started
 ---------------
